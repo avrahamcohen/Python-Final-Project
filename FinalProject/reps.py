@@ -2,43 +2,43 @@
 
 # Full Name: Avraham Cohen ID:038025797
 # Final Project: Udacity Programming Foundations with Python
-# Excel Sheet - study.xlsx
+# Excel Sheet - reps.xlsx
 
 # This class represent one row from the Excel sheet
-class study_class(object):
-    def __init__(self, date, math, english, spanish):
-        self.date = date
-        self.math = math
-        self.english = english
-        self.spanish = spanish
+class reps_class(object):
+    def __init__(self, sets, pull_ups, push_ups, sit_ups):
+        self.sets = sets
+        self.pull_ups = pull_ups
+        self.push_ups = push_ups
+        self.sit_ups = sit_ups
 
     @staticmethod
     def getItem(item, items):
         values = []
 
-        if (item == 'date'):
+        if (item == 'sets'):
             for item in items:
-                values = values + [format(item.date)]
+                values = values + [format(item.sets)]
             return values
 
-        if (item == 'math'):
+        if (item == 'pull_ups'):
             for item in items:
-                values = values + [format(item.math)]
+                values = values + [format(item.pull_ups)]
             return values
 
-        if (item == 'english'):
+        if (item == 'push_ups'):
             for item in items:
-                values = values + [format(item.english)]
+                values = values + [format(item.push_ups)]
             return values
 
-        if (item == 'spanish'):
+        if (item == 'sit_ups'):
             for item in items:
-                values = values + [format(item.spanish)]
+                values = values + [format(item.sit_ups)]
             return values
 
     @staticmethod
     def getElementNames():
-      return ['Math', 'English', 'Spanish']
+      return ['Pull Ups', 'Push Ups', 'Sit Ups']
 
     @staticmethod
     def getValueStructure():

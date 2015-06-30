@@ -11,8 +11,10 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 from FinalProjectHandler import excel_class
+
 from scores import score_class
 from study import study_class
+from reps import reps_class
 
 #Array Structure: [[Date], [Element], [Element], [Element], ... ]
 values = []
@@ -20,14 +22,18 @@ colors = []
 elements = []
 y_limit = 0
 y_label = ''
+is_date_sheet = True
 
 def mainWindowSetup():
 	plt.gcf().canvas.set_window_title('Excel Sheet Analyze Tool')
 	mng = plt.get_current_fig_manager()
 	mng.resize(*mng.window.maxsize())
-	plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
-	plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-	plt.gcf().autofmt_xdate()
+
+	if (is_date_sheet == True):
+		plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
+		plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+		plt.gcf().autofmt_xdate()
+
 	plt.grid(True)
 	plt.show()
 
@@ -44,6 +50,7 @@ def getElements(file_name):
 	global colors
 	global y_limit
 	global y_label
+	global is_date_sheet
 
 	excel_handler = excel_class(file_name)
 
@@ -72,6 +79,7 @@ def getElements(file_name):
 
 		y_limit = 200
 		y_label = 'Weight (kg)'
+		is_date_sheet = True
 
 	########################################################
 	#                                                      #
@@ -93,6 +101,32 @@ def getElements(file_name):
 
 		y_limit = 100
 		y_label = 'Grade'
+
+		is_date_sheet = True
+
+	########################################################
+	#                                                      #
+	#		Excel Sheet Name: reps.xlsx					   #
+	#                                                      #
+	########################################################
+
+	if (file_name == 'reps.xlsx'):
+		excel_handler.readExcelSheet(reps_class)
+
+		elements = reps_class.getElementNames()
+		values = reps_class.getValueStructure()
+		colors = reps_class.getColors()
+		
+		values[0] = reps_class.getItem('sets', excel_handler.getItems())
+		values[1] = reps_class.getItem('pull_ups', excel_handler.getItems())
+		values[2] = reps_class.getItem('push_ups', excel_handler.getItems())
+		values[3] = reps_class.getItem('sit_ups', excel_handler.getItems())
+
+		y_limit = 100
+		y_label = 'Sets'
+
+		is_date_sheet = False
+
 		
 def subsplotSetup(files):
 	pos = 0
@@ -110,7 +144,10 @@ def subsplotSetup(files):
 			data = 0
 
 			for index in range(0,len(elements)):
-				axarr.plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+				if (is_date_sheet == True):
+					axarr.plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+				else:
+					axarr.plot(values[0],values[data+1], color=colors[data])
 				axarr.text(1.005, space, elements[data], color=colors[data], horizontalalignment='left', verticalalignment='top', transform = axarr.transAxes)
 				space = space - 0.10
 				data = data + 1
@@ -122,7 +159,7 @@ def subsplotSetup(files):
 		f, axarr = plt.subplots(len(files), sharex=False)
 		for file_name in files:
 			getElements(file_name)	
-			axarr[pos].set_title('For Excel Sheet: ' + file_name + '\n')
+			#axarr[pos].set_title('For Excel Sheet: ' + file_name + '\n')
 			axarr[pos].set_ylabel(y_label)
 			axarr[pos].set_ylim([0,y_limit])
 
@@ -130,7 +167,10 @@ def subsplotSetup(files):
 			data = 0
 
 			for index in range(0,len(elements)):
-				axarr[pos].plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+				if (is_date_sheet == True):
+					axarr[pos].plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+				else:
+					axarr[pos].plot(values[0],values[data+1], color=colors[data])
 				axarr[pos].text(1.005, space, elements[data], color=colors[data], horizontalalignment='left', verticalalignment='top', transform = axarr[pos].transAxes)
 				space = space - 0.10
 				data = data + 1

@@ -36,7 +36,9 @@ Linux:
 			For Example: 
 				python FinalProjectMain.py scores.xlsx
 				python FinalProjectMain.py study.xlsx
+				python FinalProjectMain.py reps.xlsx
 				python FinalProjectMain.py scores.xlsx study.xlsx
+				python FinalProjectMain.py scores.xlsx study.xlsx reps.xlsx
 Windows:
 	
 	1.	Install Python support: (python.org)
@@ -53,4 +55,6 @@ Windows:
 			For Example: 
 				python FinalProjectMain.py scores.xlsx
 				python FinalProjectMain.py study.xlsx
+				python FinalProjectMain.py reps.xlsx
 				python FinalProjectMain.py scores.xlsx study.xlsx
+				python FinalProjectMain.py scores.xlsx study.xlsx reps.xlsx
