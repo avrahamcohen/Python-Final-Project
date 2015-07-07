@@ -10,11 +10,13 @@ import datetime as dt
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-from FinalProjectHandler import excel_class
+#Excel Sheet Reader Class
+from excelHandler import ClassExcel
 
-from scores import score_class
-from study import study_class
-from reps import reps_class
+#Class represent an a Excel Sheet
+from scoresExcelSheet import ClassScore
+from studyExcelSheet import ClassStudy
+from repsExcelSheet import ClassReps
 
 #Array Structure: [[Date], [Element], [Element], [Element], ... ]
 values = []
@@ -22,29 +24,27 @@ colors = []
 elements = []
 y_limit = 0
 y_label = ''
+x_label = ''
 is_date_sheet = True
 
-def mainWindowSetup():
+def main_window_setup():
 	plt.gcf().canvas.set_window_title('Excel Sheet Analyze Tool')
 	mng = plt.get_current_fig_manager()
 	mng.resize(*mng.window.maxsize())
-
 	if (is_date_sheet == True):
 		plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
 		plt.gca().xaxis.set_major_locator(mdates.DayLocator())
 		plt.gcf().autofmt_xdate()
-
-	plt.grid(True)
 	plt.show()
 
 # Convert array of dates
-def getDateAxis(array):
+def get_date_axis(array):
 	dates = [dt.datetime.strptime(d,'%d/%m/%Y').date() for d in array] 
 	return dates
 
 # Pulling elements into array of arrays
 # Here you need to setup your prefrences !!!
-def getElements(file_name):
+def get_elements(file_name):
 	global elements
 	global values
 	global colors
@@ -52,30 +52,30 @@ def getElements(file_name):
 	global y_label
 	global is_date_sheet
 
-	excel_handler = excel_class(file_name)
+	excel_handler = ClassExcel(file_name)
 
 	########################################################
 	#                                                      #
-	#		Excel Sheet Name: scores.xlsx				   #
+	#		Excel Sheet Name: scores.xlsx	       #
 	#                                                      #
 	########################################################
 
 	if (file_name == 'scores.xlsx'):
-		excel_handler.readExcelSheet(score_class)
+		excel_handler.read_excel_sheet(ClassScore)
 
-		elements = score_class.getElementNames()
-		values = score_class.getValueStructure()
-		colors = score_class.getColors()
+		elements = ClassScore.get_element_names()
+		values = ClassScore.get_value_structure()
+		colors = ClassScore.get_colors()
 		
-		values[0] = score_class.getItem('date', excel_handler.getItems())
-		values[1] = score_class.getItem('snatch', excel_handler.getItems())
-		values[2] = score_class.getItem('clean', excel_handler.getItems())
-		values[3] = score_class.getItem('jerk', excel_handler.getItems())
-		values[4] = score_class.getItem('dead_lift', excel_handler.getItems())
-		values[5] = score_class.getItem('back_squat', excel_handler.getItems())
-		values[6] = score_class.getItem('front_squat', excel_handler.getItems())
-		values[7] = score_class.getItem('over_head_squat', excel_handler.getItems())
-		values[8] = score_class.getItem('bench_press', excel_handler.getItems())
+		values[0] = ClassScore.get_item('date', excel_handler.get_items())
+		values[1] = ClassScore.get_item('snatch', excel_handler.get_items())
+		values[2] = ClassScore.get_item('clean', excel_handler.get_items())
+		values[3] = ClassScore.get_item('jerk', excel_handler.get_items())
+		values[4] = ClassScore.get_item('dead_lift', excel_handler.get_items())
+		values[5] = ClassScore.get_item('back_squat', excel_handler.get_items())
+		values[6] = ClassScore.get_item('front_squat', excel_handler.get_items())
+		values[7] = ClassScore.get_item('over_head_squat', excel_handler.get_items())
+		values[8] = ClassScore.get_item('bench_press', excel_handler.get_items())
 
 		y_limit = 200
 		y_label = 'Weight (kg)'
@@ -83,21 +83,21 @@ def getElements(file_name):
 
 	########################################################
 	#                                                      #
-	#		Excel Sheet Name: study.xlsx				   #
+	#		Excel Sheet Name: study.xlsx	       #
 	#                                                      #
 	########################################################
 
 	if (file_name == 'study.xlsx'):
-		excel_handler.readExcelSheet(study_class)
+		excel_handler.read_excel_sheet(ClassStudy)
 
-		elements = study_class.getElementNames()
-		values = study_class.getValueStructure()
-		colors = study_class.getColors()
+		elements = ClassStudy.get_element_names()
+		values = ClassStudy.get_value_structure()
+		colors = ClassStudy.get_colors()
 		
-		values[0] = study_class.getItem('date', excel_handler.getItems())
-		values[1] = study_class.getItem('math', excel_handler.getItems())
-		values[2] = study_class.getItem('english', excel_handler.getItems())
-		values[3] = study_class.getItem('spanish', excel_handler.getItems())
+		values[0] = ClassStudy.get_item('date', excel_handler.get_items())
+		values[1] = ClassStudy.get_item('math', excel_handler.get_items())
+		values[2] = ClassStudy.get_item('english', excel_handler.get_items())
+		values[3] = ClassStudy.get_item('spanish', excel_handler.get_items())
 
 		y_limit = 100
 		y_label = 'Grade'
@@ -106,21 +106,21 @@ def getElements(file_name):
 
 	########################################################
 	#                                                      #
-	#		Excel Sheet Name: reps.xlsx					   #
+	#		Excel Sheet Name: reps.xlsx            #
 	#                                                      #
 	########################################################
 
 	if (file_name == 'reps.xlsx'):
-		excel_handler.readExcelSheet(reps_class)
+		excel_handler.read_excel_sheet(ClassReps)
 
-		elements = reps_class.getElementNames()
-		values = reps_class.getValueStructure()
-		colors = reps_class.getColors()
+		elements = ClassReps.get_element_names()
+		values = ClassReps.get_value_structure()
+		colors = ClassReps.get_colors()
 		
-		values[0] = reps_class.getItem('sets', excel_handler.getItems())
-		values[1] = reps_class.getItem('pull_ups', excel_handler.getItems())
-		values[2] = reps_class.getItem('push_ups', excel_handler.getItems())
-		values[3] = reps_class.getItem('sit_ups', excel_handler.getItems())
+		values[0] = ClassReps.get_item('sets', excel_handler.get_items())
+		values[1] = ClassReps.get_item('pull_ups', excel_handler.get_items())
+		values[2] = ClassReps.get_item('push_ups', excel_handler.get_items())
+		values[3] = ClassReps.get_item('sit_ups', excel_handler.get_items())
 
 		y_limit = 100
 		y_label = 'Sets'
@@ -128,14 +128,14 @@ def getElements(file_name):
 		is_date_sheet = False
 
 		
-def subsplotSetup(files):
+def subsplot_setup(files):
 	pos = 0
 
 	if (len(files) == 1):
 
 		f, axarr = plt.subplots(1)
 		for file_name in files:
-			getElements(file_name)	
+			get_elements(file_name)	
 			axarr.set_title('For Excel Sheet: ' + file_name + '\n')
 			axarr.set_ylabel(y_label)
 			axarr.set_ylim([0,y_limit])
@@ -145,7 +145,7 @@ def subsplotSetup(files):
 
 			for index in range(0,len(elements)):
 				if (is_date_sheet == True):
-					axarr.plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+					axarr.plot(get_date_axis(values[0]),values[data+1], color=colors[data])	
 				else:
 					axarr.plot(values[0],values[data+1], color=colors[data])
 				axarr.text(1.005, space, elements[data], color=colors[data], horizontalalignment='left', verticalalignment='top', transform = axarr.transAxes)
@@ -158,17 +158,17 @@ def subsplotSetup(files):
 
 		f, axarr = plt.subplots(len(files), sharex=False)
 		for file_name in files:
-			getElements(file_name)	
-			#axarr[pos].set_title('For Excel Sheet: ' + file_name + '\n')
+			get_elements(file_name)	
 			axarr[pos].set_ylabel(y_label)
 			axarr[pos].set_ylim([0,y_limit])
+			axarr[pos].grid(True)
 
 			space = 1
 			data = 0
 
 			for index in range(0,len(elements)):
 				if (is_date_sheet == True):
-					axarr[pos].plot(getDateAxis(values[0]),values[data+1], color=colors[data])	
+					axarr[pos].plot(get_date_axis(values[0]),values[data+1], color=colors[data])	
 				else:
 					axarr[pos].plot(values[0],values[data+1], color=colors[data])
 				axarr[pos].text(1.005, space, elements[data], color=colors[data], horizontalalignment='left', verticalalignment='top', transform = axarr[pos].transAxes)
@@ -182,5 +182,5 @@ values = []
 for item in sys.argv:
 	if (item != sys.argv[0]):
 		values = values + [item]
-subsplotSetup(values)
-mainWindowSetup()
+subsplot_setup(values)
+main_window_setup()

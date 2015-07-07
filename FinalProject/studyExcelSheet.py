@@ -5,7 +5,7 @@
 # Excel Sheet - study.xlsx
 
 # This class represent one row from the Excel sheet
-class study_class(object):
+class ClassStudy(object):
     def __init__(self, date, math, english, spanish):
         self.date = date
         self.math = math
@@ -13,7 +13,7 @@ class study_class(object):
         self.spanish = spanish
 
     @staticmethod
-    def getItem(item, items):
+    def get_item(item, items):
         values = []
 
         if (item == 'date'):
@@ -37,13 +37,13 @@ class study_class(object):
             return values
 
     @staticmethod
-    def getElementNames():
+    def get_element_names():
       return ['Math', 'English', 'Spanish']
 
     @staticmethod
-    def getValueStructure():
+    def get_value_structure():
     	return [[],[],[],[]]
 
     @staticmethod
-    def getColors():
+    def get_colors():
     	return ['blue','green','red','yellow']

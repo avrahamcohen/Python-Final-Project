@@ -5,7 +5,7 @@
 # Excel Sheet - reps.xlsx
 
 # This class represent one row from the Excel sheet
-class reps_class(object):
+class ClassReps(object):
     def __init__(self, sets, pull_ups, push_ups, sit_ups):
         self.sets = sets
         self.pull_ups = pull_ups
@@ -13,7 +13,7 @@ class reps_class(object):
         self.sit_ups = sit_ups
 
     @staticmethod
-    def getItem(item, items):
+    def get_item(item, items):
         values = []
 
         if (item == 'sets'):
@@ -37,13 +37,13 @@ class reps_class(object):
             return values
 
     @staticmethod
-    def getElementNames():
+    def get_element_names():
       return ['Pull Ups', 'Push Ups', 'Sit Ups']
 
     @staticmethod
-    def getValueStructure():
+    def get_value_structure():
     	return [[],[],[],[]]
 
     @staticmethod
-    def getColors():
+    def get_colors():
     	return ['blue','green','red','yellow']

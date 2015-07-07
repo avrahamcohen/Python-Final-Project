@@ -2,23 +2,23 @@
 
 # Full Name: Avraham Cohen ID:038025797
 # Final Project: Udacity Programming Foundations with Python
-# Handler Program
+# Excel Handler Program
 
 import xlrd
 from datetime import datetime, date, time
 from xlrd import open_workbook, cellname, xldate_as_tuple
 
 # This class handle the reading from the Excel sheet.
-class excel_class:
+class ClassExcel:
   def __init__(self, fileName):
     self.fileName = fileName
     self.items = []
 
-  def convertToDate(self, value):
+  def convert_to_date(self, value):
     date_value = xldate_as_tuple(value, 0)
     return datetime(*date_value).strftime("%d/%m/%Y")
 
-  def readExcelSheet(self, class_name):
+  def read_excel_sheet(self, class_name):
     wb = open_workbook(self.fileName)
     for sheet in wb.sheets():
         number_of_rows = sheet.nrows
@@ -29,7 +29,7 @@ class excel_class:
             values = []
             for col in range(number_of_columns):
                 if sheet.cell(row,col).ctype == xlrd.XL_CELL_DATE:
-                  value = self.convertToDate((sheet.cell(row,col).value));
+                  value = self.convert_to_date((sheet.cell(row,col).value));
                 else:
                   value = (sheet.cell(row,col).value)
                 try:
@@ -41,6 +41,6 @@ class excel_class:
             item = class_name(*values)
             self.items.append(item)
 
-  def getItems(self):
+  def get_items(self):
     return self.items
 

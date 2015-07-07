@@ -5,7 +5,7 @@
 # Excel Sheet - scores.xlsx
 
 # This class represent one row from the Excel sheet
-class score_class(object):
+class ClassScore(object):
     def __init__(self, date, snatch, clean, jerk, dead_lift, back_squat, front_squat, over_head_squat, bench_press):
         self.date = date
         self.snatch = snatch
@@ -18,7 +18,7 @@ class score_class(object):
         self.bench_press = bench_press
 
     @staticmethod
-    def getItem(item, items):
+    def get_item(item, items):
 	    values = []
 
 	    if (item == 'date'):
@@ -67,13 +67,13 @@ class score_class(object):
 	      return values
 
     @staticmethod
-    def getElementNames():
+    def get_element_names():
       return ['Snatch', 'Clean', 'Jerk', 'Dead Lift', 'Back Squat', 'Front Squat', 'Over Head Squat', 'Bench Press']
 
     @staticmethod
-    def getValueStructure():
+    def get_value_structure():
     	return [[],[],[],[],[],[],[],[],[]]
 
     @staticmethod
-    def getColors():
+    def get_colors():
     	return ['blue','green','red','orange','magenta','yellow','black','gray']
